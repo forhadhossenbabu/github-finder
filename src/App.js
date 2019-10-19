@@ -3,6 +3,7 @@ import axios from "axios";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import AboutPage from "./components/pages/about.component";
+import User from "./components/users/user.component";
 
 import Navbar from "./components/layout/navbar.component";
 import Users from "./components/users/users.components";
@@ -16,6 +17,7 @@ class App extends React.Component {
     super();
     this.state = {
       users: [],
+      user: {},
       loading: false,
       alert: null
     };
@@ -42,8 +44,16 @@ class App extends React.Component {
     }, 3000);
   };
 
+  getUser = async userName => {
+    this.setState({ loading: true });
+    const res = await axios.get(
+      `https://api.github.com/users/${userName}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+    );
+    this.setState({ user: res.data, loading: false });
+  };
+
   render() {
-    const { users, loading, alert } = this.state;
+    const { users, loading, alert, user } = this.state;
     return (
       <Router>
         <div className="main-app">
@@ -67,6 +77,18 @@ class App extends React.Component {
                 )}
               />
               <Route exact path="/about" component={AboutPage} />
+              <Route
+                exact
+                path="/user/:login"
+                render={props => (
+                  <User
+                    {...props}
+                    getUser={this.getUser}
+                    loading={loading}
+                    user={user}
+                  />
+                )}
+              />
             </Switch>
           </div>
         </div>
