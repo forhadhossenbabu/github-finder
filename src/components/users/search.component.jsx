@@ -11,12 +11,18 @@ class Search extends React.Component {
   handleChange = e => this.setState({ [e.target.name]: e.target.value });
 
   handleSubmit = e => {
-    const { text } = this.state;
     e.preventDefault();
-    this.props.searchUser(text);
+
+    if (this.state.text === "") {
+      alert("Enter user name");
+    } else {
+      this.props.searchUser(this.state.text);
+      this.setState({ text: "" });
+    }
   };
 
   render() {
+    const { clearUsers, showClear } = this.props;
     return (
       <div>
         <form className="search" onSubmit={this.handleSubmit}>
@@ -32,6 +38,11 @@ class Search extends React.Component {
             className="btn btn-dark btn-block"
           />
         </form>
+        {showClear ? (
+          <button className="btn btn-light btn-block" onClick={clearUsers}>
+            Clear
+          </button>
+        ) : null}
       </div>
     );
   }
