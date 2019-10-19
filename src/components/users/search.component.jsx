@@ -14,7 +14,7 @@ class Search extends React.Component {
     e.preventDefault();
 
     if (this.state.text === "") {
-      alert("Enter user name");
+      this.props.setAlert("Please enter something", "light");
     } else {
       this.props.searchUser(this.state.text);
       this.setState({ text: "" });

@@ -6,13 +6,15 @@ import Users from "./components/users/users.components";
 import Search from "./components/users/search.component";
 
 import "./app.css";
+import Alert from "./components/layout/alert.component";
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
       users: [],
-      loading: false
+      loading: false,
+      alert: null
     };
   }
 
@@ -30,16 +32,25 @@ class App extends React.Component {
       loading: false
     });
 
+  setAlert = (msg, type) => {
+    this.setState({ alert: { msg, type } });
+    setTimeout(() => {
+      this.setState({ alert: null });
+    }, 3000);
+  };
+
   render() {
-    const { users, loading } = this.state;
+    const { users, loading, alert } = this.state;
     return (
       <div className="main-app">
         <Navbar title="Github Finder" />
         <div className="container">
+          <Alert alert={alert} />
           <Search
             searchUser={this.searchUser}
             clearUsers={this.clearUsers}
             showClear={this.state.users.length > 1 ? true : false}
+            setAlert={this.setAlert}
           />
           <Users users={users} loading={loading} />
         </div>
