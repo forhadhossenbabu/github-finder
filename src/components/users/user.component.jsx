@@ -1,14 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
+import Repos from "../repos/repos.component";
 import Spinner from "../layout/spinner.component";
 
 class User extends React.Component {
-  componentDidMount() {
-    this.props.getUser(this.props.match.params.login);
+  async componentDidMount() {
+    await this.props.getUser(this.props.match.params.login);
+    await this.props.getUserRepos(this.props.match.params.login);
   }
 
   render() {
-    const { loading, user } = this.props;
+    const { loading, user, repos } = this.props;
     const {
       name,
       avatar_url,
@@ -92,6 +95,7 @@ class User extends React.Component {
             Public Gists : {public_gists}
           </div>
         </div>
+        <Repos repos={repos} />
       </React.Fragment>
     );
   }
