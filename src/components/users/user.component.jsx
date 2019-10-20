@@ -5,9 +5,9 @@ import GithubContext from "../../context/github/githubContext";
 import Repos from "../repos/repos.component";
 import Spinner from "../layout/spinner.component";
 
-const User = ({ repos, match, getUserRepos }) => {
+const User = ({ match }) => {
   const githubContext = useContext(GithubContext);
-  const { loading, user, getUser } = githubContext;
+  const { loading, user, getUser, getUserRepos, repos } = githubContext;
 
   useEffect(() => {
     getUser(match.params.login);
