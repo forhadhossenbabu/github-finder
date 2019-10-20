@@ -1,51 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 
-class Search extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      text: ""
-    };
-  }
+const Search = ({ clearUsers, showClear, setAlert, searchUser }) => {
+  const [text, setText] = useState("");
 
-  handleChange = e => this.setState({ [e.target.name]: e.target.value });
+  const handleChange = e => setText(e.target.value);
 
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
 
-    if (this.state.text === "") {
-      this.props.setAlert("Please enter something", "light");
+    if (text === "") {
+      setAlert("Please enter something", "light");
     } else {
-      this.props.searchUser(this.state.text);
-      this.setState({ text: "" });
+      searchUser(text);
+      setText("");
     }
   };
 
-  render() {
-    const { clearUsers, showClear } = this.props;
-    return (
-      <div>
-        <form className="search" onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            name="text"
-            placeholder="Search User"
-            onChange={this.handleChange}
-          />
-          <input
-            type="submit"
-            value="Search"
-            className="btn btn-dark btn-block"
-          />
-        </form>
-        {showClear ? (
-          <button className="btn btn-light btn-block" onClick={clearUsers}>
-            Clear
-          </button>
-        ) : null}
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <form className="search" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="text"
+          placeholder="Search User"
+          onChange={handleChange}
+          value={text}
+        />
+        <input
+          type="submit"
+          value="Search"
+          className="btn btn-dark btn-block"
+        />
+      </form>
+      {showClear ? (
+        <button className="btn btn-primary btn-block" onClick={clearUsers}>
+          Clear
+        </button>
+      ) : null}
+    </div>
+  );
+};
 
 export default Search;

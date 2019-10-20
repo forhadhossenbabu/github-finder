@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = ({ title }) => (
-  <nav className="navbar bg-primary">
+  <nav className="navbar bg-success">
     <h1>{title}</h1>
     <ul>
       <li>

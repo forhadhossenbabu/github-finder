@@ -1,7 +1,6 @@
 import React from "react";
 
 const RepoItem = ({ repo }) => {
-  console.log(repo);
   return (
     <div className="card">
       <h3>
