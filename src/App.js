@@ -13,7 +13,7 @@ import Alert from "./components/layout/alert.component";
 
 import GithubState from "./context/github/GithubState";
 
-import "./app.css";
+import "./App.css";
 
 const App = () => {
   const [alert, newAlert] = useState(null);
